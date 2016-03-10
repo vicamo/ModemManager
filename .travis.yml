@@ -1,0 +1,15 @@
+language: c
+sudo: required
+dist: trusty
+cache: apt
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get build-dep -y modemmanager
+  - sudo apt-get install --no-install-recommends -y lcov libgirepository1.0-dev libmbim-glib-dev libpolkit-gobject-1-dev libqmi-glib-dev valac
+
+# libmbim-glib >= 1.11.1
+# libqmi-glib >= 1.13.7
+script:
+  - ./autogen.sh --enable-code-coverage --enable-gtk-doc --enable-introspection --without-mbim --with-polkit --without-qmi
+  - make V=1
